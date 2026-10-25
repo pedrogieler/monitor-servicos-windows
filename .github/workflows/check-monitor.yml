@@ -1,0 +1,21 @@
+name: Check monitor on Windows
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check syntax, behavior and local service query
+        shell: powershell
+        run: .\tests\Test-Monitor.ps1
+      - name: Check BAT launcher
+        shell: cmd
+        run: Monitor_Servicos.bat -NaoInterativo
